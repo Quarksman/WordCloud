@@ -1,0 +1,44 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+from wordcloud import WordCloud,ImageColorGenerator
+from PIL import Image
+import numpy as np
+
+
+df=pd.read_csv('/Users/kritsana/Downloads/Datasets/Learn/test.csv')
+print(df.head(2))
+print(df.nunique())
+text1 = " ".join(title for title in df.Title)
+word_cloud1 = WordCloud(collocations = False, background_color = 'white',
+                        width = 3048, height = 2080).generate(text1)
+word_cloud1.to_file('got.png')
+plt.imshow(word_cloud1, interpolation='bilinear')
+plt.axis("off")
+plt.show()
+
+A=['Yes','Ng','Non','Non','Yes','Yes','Yes','SS','BB','CC','Ok','CC','CC','Toon','Toon','Tin','Puk']
+text2 = " ".join(A)
+word_cloud2 = WordCloud(collocations = False, background_color = 'white',
+                        width = 3048, height = 2080).generate(text2)
+word_cloud2.to_file('got1.png')
+plt.imshow(word_cloud2, interpolation='bilinear')
+plt.axis("off")
+plt.show()
+
+df=pd.read_csv('/Users/kritsana/Downloads/Datasets/Learn/test.csv')
+text3 = " ".join(title for title in df.Title)
+background_image = np.array(Image.open('/Users/kritsana/Downloads/Datasets/Learn/mickey.png'))
+plt.imshow(background_image)
+#use Background smaller than word 
+
+word_cloud3 = WordCloud(background_color = 'white',mask = background_image,width = 2048, height = 1080).generate(text3)
+
+# font color matching the masked image
+img_colors = ImageColorGenerator(background_image)
+word_cloud3.recolor(color_func = img_colors)
+
+#saving the image
+word_cloud3.to_file('disney.png')
+plt.imshow(word_cloud3, interpolation='bilinear')
+plt.axis("off")
+plt.show()
